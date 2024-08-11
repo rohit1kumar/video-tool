@@ -33,18 +33,23 @@ function TranscodeVideo() {
 
   const loadFFmpeg = async () => {
     try {
-      const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm';
+      const baseURL = 'https://unpkg.com/@ffmpeg/core-mt@0.12.6/dist/esm';
       const ffmpeg = ffmpegRef.current;
 
       ffmpeg.on('progress', ({ progress, time }) => {
-        const percent = Math.round(progress * 100);
+        const percent = (progress * 100).toFixed(2);
         const seconds = Math.round(time / 1000000);
         messageRef.current.innerHTML = `${percent}% (transcoded time: ${seconds} s)`;
+      });
+
+      ffmpeg.on('log', ({ message }) => {
+        console.log(message);
       });
 
       await ffmpeg.load({
         coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
         wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+        workerURL: await toBlobURL(`${baseURL}/ffmpeg-core.worker.js`, 'text/javascript'),
       });
 
       setLoaded(true);
@@ -128,6 +133,8 @@ function TranscodeVideo() {
               <video
                 ref={videoRef}
                 controls
+                autoPlay
+                muted
                 className="w-full max-h-96 mb-4"
               ></video>
             )}
