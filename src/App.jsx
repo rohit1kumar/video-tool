@@ -126,7 +126,7 @@ function TranscodeVideo() {
               type="file"
               accept="video/*"
               onChange={handleFileChange}
-              className="mb-4 p-2 border border-gray-600 rounded w-full bg-gray-800 text-white"
+              className="mb-4 p-2 border border-gray-600 rounded-lg bg-gray-800 text-white file:border-0 file:bg-blue-600 file:text-white file:cursor-pointer file:rounded-lg file:px-4 file:py-2 transition-all duration-300 hover:border-gray-500"
             />
 
             {(videoFile || transcodedVideo) && (
@@ -135,7 +135,7 @@ function TranscodeVideo() {
                 controls
                 autoPlay
                 muted
-                className="w-full max-h-96 mb-4"
+                className="w-full max-h-96 mb-4 rounded-lg shadow-lg"
               ></video>
             )}
 
@@ -143,14 +143,14 @@ function TranscodeVideo() {
               {!transcodedVideo ? (
                 <button
                   onClick={handleVideoTranscode}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-all duration-300"
                 >
                   Transcode
                 </button>
               ) : (
                 <button
                   onClick={downloadVideo}
-                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                  className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition-all duration-300"
                 >
                   Download
                 </button>
